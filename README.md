@@ -32,7 +32,7 @@
 - "Sort alphabetically" เป็น radio - เรียงลำดับ task ตามลำดับตัวอักษร (เลือกโดย default) (1 คะแนน)
 - "Sort incomplete tasks" เป็น radio - เรียงลำดับ task โดยเอารายการที่มีสถานะ "Incomplete" ขึ้นไว้ด้านบน (1 คะแนน)
 - "Sort flagged task first" เป็น radio - เรียงลำดับ task โดยเอารายการที่มี "Flag" ขึ้นไว้ด้านบน (1 คะแนน)
-- "Sort by complete date (ascending)" radio - เรียงลำดับ task ตามวัน due date โดยเอารายการที่วัน due date ถึงก่อนไว้ด้านบน (1 คะแนน)
+- "Sort by due date (ascending)" radio - เรียงลำดับ task ตามวัน due date โดยเอารายการที่วัน due date ถึงก่อนไว้ด้านบน (1 คะแนน)
 
 ![TODO 2-2](https://github.com/it-web-pro/MINI-PROJECT-2/blob/main/TODO%202-2.png)
 
