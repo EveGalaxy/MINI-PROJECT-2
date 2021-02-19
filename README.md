@@ -22,7 +22,7 @@
     - วันที่จะต้องเป็น format "yyyy-mm-dd" (เป็นค่าว่างได้)
     - ต้องเลือก icon สี ได้ 1 สีเท่านั้น จะไม่เลือกไม่ได้ หรือ เลือกมากกว่า 1 สีไม่ได้
 
-[TODO 2-1]
+![TODO 2-1](https://github.com/it-web-pro/MINI-PROJECT-2/blob/main/TODO%202-1.png)
 
 ### 2. เพิ่ม filters สำหรับการกรองรายการ task โดยสามารถกรองได้ดังนี้
 - "Hide completed tasks" เป็น checkbox เมื่อติ้กจะทำการซ่อน task ที่มีสถานะ "Complete" (1 คะแนน)
@@ -34,7 +34,7 @@
 - "Sort flagged task first" เป็น radio - เรียงลำดับ task โดยเอารายการที่มี "Flag" ขึ้นไว้ด้านบน (1 คะแนน)
 - "Sort by complete date (ascending)" radio - เรียงลำดับ task ตามวัน due date โดยเอารายการที่วัน due date ถึงก่อนไว้ด้านบน (1 คะแนน)
 
-[TODO 2-2]
+![TODO 2-2](https://github.com/it-web-pro/MINI-PROJECT-2/blob/main/TODO%202-2.png)
 
 ### 4. ปรับให้สามารถเพิ่มมากกว่า 1 ToDo list ได้ โดยจะต้องปรับเพิ่มดังต่อไปนี้
 - เพิ่มปุ่ม + ด้านบนของหน้า เมื่อกดจะแสดง modal สำหรับสร้าง list ใหม่ได้ (2 คะแนน)
@@ -60,14 +60,14 @@ tasks: [
     ],
 ```
 
-[TODO 2-3]
+![TODO 2-3](https://github.com/it-web-pro/MINI-PROJECT-2/blob/main/TODO%202-3.png)
 
 ### 5. เพิ่ม filters และ sorts สำหรับการกรองและเรียงลำดับรายการ task ในแต่ละ list โดยสามารถกรองและเรียงลำดับได้ ตามคำสั่งในข้อ 2-3
 **_หมายเหตุ: กรอง และ เรียงลำดับ แยกแต่ละ ToDo list_**
 - Filter รายการ task แยกแต่ละ list (5 คะแนน)
 - Sort รายการ task แยกแต่ละ list (5 คะแนน)
 
-[TODO 2-4]
+![TODO 2-4](https://github.com/it-web-pro/MINI-PROJECT-2/blob/main/TODO%202-4.png)
 
 
 
