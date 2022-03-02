@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>My ToDo List</title>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-body">
+        <p class="title">My ToDo List</p>
+        <!-- <p class="subtitle">Hero subtitle</p> -->
+      </div>
+    </section>
+    <section id="app">
+      <div class="container">
+        <p class="subtitle my-2">Completed: {{numComplete}} Tasks</p>
+        <p class="subtitle my-2">Incomplete: {{numInComplete}} Tasks</p>
+        <div class="columns">
+          <div class="column is-8">
+            <div class="box level py-3 my-2" v-for="task in filteredTasks" :key="task.id">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" v-model="task.isComplete"/>
+                  <span :style="{'text-decoration': task.isComplete ? 'line-through' : 'none'}">{{task.name}}</span>
+                </label>
+              </div>
+              <div class="level-right">
+                <span class="icon is-small" @click="editTask(task)">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span class="icon is-small ml-5" @click="deleteTask(task)">
+                  <i class="fas fa-trash-alt"></i>
+                </span>
+              </div>
+            </div>
+            <div class="columns mt-5">
+              <div class="column is-8">
+                <div class="field">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Task Name" v-model="newTaskName"/>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4">
+                <p class="control">
+                  <a class="button is-info" @click="addTask()"> Add New Task </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="column is-4">
+            <div class="card">
+              <header class="card-header has-background-primary">
+                <p class="card-header-title">Sort & Filter</p>
+                <p class="card-header-icon">
+                  <span class="card-header-icon icon">
+                    <i class="fas fa-filter"></i>
+                  </span>
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  <div class="control">
+                    <label class="checkbox">
+                      <input type="checkbox" v-model="hideComplete"/>
+                      Hide completed tasks
+                    </label>
+                  </div>
+                  <div class="control">
+                    <label class="checkbox">
+                      <input type="checkbox" v-model="sortIncomplete"/>
+                      Sort incomplete tasks first
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" :class="{'is-active' : showEditModal}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Edit Task</p>
+            <button class="delete" aria-label="close" @click="showEditModal = false"></button>
+          </header>
+          <section class="modal-card-body">
+            <input class="input" type="text" placeholder="Task Name" v-model="editTaskName"/>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" @click="saveEditTask()">Save</button>
+            <button class="button" @click="showEditModal = false">Cancel</button>
+          </footer>
+        </div>
+      </div>
+      <div class="modal" :class="{'is-active' : showDeleteModal}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Delete Task</p>
+            <button class="delete" aria-label="close" @click="showDeleteModal = false"></button>
+          </header>
+          <section class="modal-card-body">
+            <p>Are you sure you want to delete "{{deleteTaskName}}"?</p>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-danger" @click="confirmDeleteTask()">Confirm</button>
+            <button class="button" @click="showDeleteModal = false">Cancel</button>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- vue script --------------------------------------->
+    
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          tasks: [
+            { id: "1", name: "Item 1",isComplete: false},
+            { id: "2", name: "Item 2",isComplete: false},
+            { id: "3", name: "Item 3",isComplete: false},
+            { id: "4", name: "Item 4",isComplete: false}
+          ],
+          newTaskName: '',
+          idCounter: 0,
+          showEditModal: false,
+          showDeleteModal: false,
+          editTaskName: '',
+          editTaskId: null,
+          deleteTaskName: '',
+          deleteTaskId: null,
+          hideComplete: false,
+          sortIncomplete: false
+        },
+        created () {
+          this.idCounter = this.tasks.length
+        },
+        computed: {
+          numComplete () {
+            const count = this.tasks.filter((val) => val.isComplete === true).length
+            return count
+          },
+          numInComplete () {
+            const count = this.tasks.filter((val) => val.isComplete === false).length
+            return count
+          },
+          filteredTasks () {
+
+            this.tasks.sort((a, b) => {
+              if (a.name < b.name){
+                return -1
+              } else if (a.name > b.name){
+                return 1
+              }else{
+                return 0
+              }
+            })
+
+            function compare(a, b) {
+              if (!a.isComplete && b.isComplete) {
+                return -1
+              } else if (a.isComplete && !b.isComplete) {
+                return 1
+              } else {
+                return 0
+              }
+            }
+
+            if (this.sortIncomplete) {
+              this.tasks.sort(compare)
+            }
+
+            if (this.hideComplete) {
+              return this.tasks.filter((val) => !val.isComplete)
+            } else {
+              return this.tasks
+            }
+          },
+
+        },
+        methods: {
+          addTask () {
+            this.idCounter += 1
+            const newTask = {
+              id: this.idCounter,
+              name: this.newTaskName,
+              isComplete: false
+            }
+            this.tasks.push(newTask)
+            this.newTaskName = ''
+          },
+          editTask (task) {
+            this.showEditModal = true
+            this.editTaskName = task.name
+            this.editTaskId = task.id
+          },
+          saveEditTask () {
+            let task = this.tasks.find((val) => val.id === this.editTaskId)
+            task.name = this.editTaskName
+            this.showEditModal = false
+          },
+          deleteTask (task) {
+            this.showDeleteModal = true
+            this.deleteTaskName = task.name
+            this.deleteTaskId = task.id
+          },
+          confirmDeleteTask () {
+            let index = this.tasks.findIndex((val) => val.id === this.deleteTaskId)
+            this.tasks.splice(index, 1)
+            this.showDeleteModal = false
+          },
+        }
+      });
+    </script>
+  </body>
+</html>
